@@ -1,0 +1,19 @@
+FROM amazonlinux:latest
+
+RUN yum update && \ 
+    yum -y install ${python:-python3.9} && \
+    yum -y install python3-pip && \
+    yum -y install zip
+
+# setup current dir as working dir
+COPY . .
+VOLUME /working
+
+
+# finally run the packaging script
+CMD sh install.sh
+
+
+
+
+
