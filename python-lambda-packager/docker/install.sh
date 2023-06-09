@@ -6,15 +6,19 @@ cd working && \
     
 # package layer modules & requirements
 cp -r modules/* packaged-layer/python
-pip3 install -t packaged-layer/python -r modules/requirements.txt
+pip3 install \
+    --platform manylinux2014_x86_64   --implementation cp   --python 3.9   --only-binary=:all: --upgrade\
+    -t packaged-layer/python -r modules/requirements.txt
 
 # package function modules & requirements
 cp -r function/* packaged-lambda/
-pip3 install -t packaged-lambda -r function/requirements.txt
+pip3 install \
+    --platform manylinux2014_x86_64   --implementation cp   --python 3.9   --only-binary=:all: --upgrade\
+    -t packaged-lambda -r function/requirements.txt
 
 # zipping
 cd packaged-layer && \
-    zip -r9 ../packaged-layer.zip . && \
+    zip -r9 ../packaged-layer.zip ./python/ && \
     cd .. && rm -rf packaged-layer
 
 cd packaged-lambda && \
